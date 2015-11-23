@@ -36,7 +36,7 @@
                            (list step))]
                       [(turtle? step)
                        (turtle-steps step)]))
-              steps))
+              (filter (compose not null?) steps)))
 
 (define (*repeat times . steps)
   (append-map (const steps) (range times)))
