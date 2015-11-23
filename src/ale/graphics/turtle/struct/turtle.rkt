@@ -6,6 +6,6 @@
 
 (struct turtle pict (steps))
 
-(struct turtle-state (pos angle bounds) #:transparent)
+(struct turtle-state (pos angle bounds painting) #:transparent)
 
 (struct turtle-step (instruction arguments) #:transparent)

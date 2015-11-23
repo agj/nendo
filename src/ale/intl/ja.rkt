@@ -12,6 +12,8 @@
 (define back backward)
 (define migi right)
 (define hidari left)
+(define kaku paint)
+(define kakanai dont-paint)
 (define kurikaesu repeat)
 
 ; pict

@@ -30,3 +30,7 @@
 (define (point-sum a b)
   (point (+ (point-x a) (point-x b))
          (+ (point-y a) (point-y b))))
+
+(define (point-eq? a b)
+  (and (= (point-x a) (point-x b))
+       (= (point-y a) (point-y b))))

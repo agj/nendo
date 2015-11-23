@@ -24,11 +24,14 @@
 
 (define (forward amount) (turtle-step 'forward (list amount)))
 (define (backward amount) (turtle-step 'backward (list amount)))
-(define (right amount) (turtle-step 'right (list amount)))
-(define (left amount) (turtle-step 'left (list amount)))
+(define (right amount) (turtle-step 'right (list (degrees->radians amount))))
+(define (left amount) (turtle-step 'left (list (degrees->radians amount))))
+(define (paint) (turtle-step 'paint '()))
+(define (dont-paint) (turtle-step 'dont-paint '()))
 (define (repeat . args) (turtle-step 'repeat args))
 
 (define (expand-turtle-sub-steps steps)
+  (define valid (λ (x) (not (or (null? x) (void? x)))))
   (append-map (λ (step)
                 (cond [(turtle-step? step)
                        (if (eq? 'repeat (turtle-step-instruction step))
@@ -36,7 +39,7 @@
                            (list step))]
                       [(turtle? step)
                        (turtle-steps step)]))
-              (filter (compose not null?) steps)))
+              (filter valid steps)))
 
 (define (*repeat times . steps)
   (append-map (const steps) (range times)))
@@ -47,7 +50,7 @@
   (define offset-y (- (rect-top bounds)))
   (pict-draw (dc (λ (dc dx dy)
                    (foldl (process-turtle-step dc (+ dx offset-x) (+ dy offset-y))
-                          (turtle-state (point 0 0) 0 (rect 0 0 0 0))
+                          (turtle-state (point 0 0) 0 (rect 0 0 0 0) #t)
                           steps))
                  (point-x size) (point-y size))))
 
@@ -56,8 +59,8 @@
     (define state (advance-turtle-state step old-state))
     (define old-pos (turtle-state-pos old-state))
     (define pos (turtle-state-pos state))
-    (when (not (and (= (point-x pos) (point-x old-pos))
-                    (= (point-y pos) (point-y old-pos))))
+    (when (and (turtle-state-painting state)
+               (not (point-eq? pos old-pos)))
           (send dc draw-line (+ dx (point-x old-pos))
                              (+ dy (point-y old-pos))
                              (+ dx (point-x pos))
@@ -74,12 +77,16 @@
         [(eq? 'right instruction)
          (turtle-state-rotate (car arguments) state)]
         [(eq? 'left instruction)
-         (turtle-state-rotate (- (car arguments)) state)]))
+         (turtle-state-rotate (- (car arguments)) state)]
+        [(eq? 'paint instruction)
+         (turtle-state-set-paint #t state)]
+        [(eq? 'dont-paint instruction)
+         (turtle-state-set-paint #f state)]))
 
 (define (turtle-steps->states steps)
   (reverse (foldl (λ (step states)
                     (cons (advance-turtle-state step (car states)) states))
-                  (list (turtle-state (point 0 0) 0 (rect 0 0 0 0)))
+                  (list (turtle-state (point 0 0) 0 (rect 0 0 0 0) #t))
                   steps)))
 
 (define (turtle-steps->result-state steps)
@@ -90,14 +97,21 @@
   (define prev-pos (turtle-state-pos state))
   (define prev-bounds (turtle-state-bounds state))
   (define pos (point-sum prev-pos
-                         (point-polar amount angle)))
+                         (point-polar amount (- angle (* tau 0.25)))))
   (define bounds (rect (min (point-y pos) (rect-top prev-bounds))
                            (max (point-x pos) (rect-right prev-bounds))
                            (max (point-y pos) (rect-bottom prev-bounds))
                            (min (point-x pos) (rect-left prev-bounds))))
-  (turtle-state pos angle bounds))
+  (turtle-state pos angle bounds (turtle-state-painting state)))
 
 (define (turtle-state-rotate amount state)
   (turtle-state (turtle-state-pos state)
                 (+ amount (turtle-state-angle state))
-                (turtle-state-bounds state)))
+                (turtle-state-bounds state)
+                (turtle-state-painting state)))
+
+(define (turtle-state-set-paint active state)
+  (turtle-state (turtle-state-pos state)
+                (turtle-state-angle state)
+                (turtle-state-bounds state)
+                active))
