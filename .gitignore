@@ -1,0 +1,14 @@
+
+experiment/
+
+
+# System cruft
+
+.DS_Store
+
+
+# Racket temporary files
+
+*.rkt~
+\#*\#
+compiled/
