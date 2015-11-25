@@ -1,10 +1,16 @@
 #lang racket
-(require "../main.rkt")
+(require "../../main.rkt"
+         "colors.rkt")
 
 (provide (all-defined-out)
-         (all-from-out "../main.rkt"))
+         (all-from-out "../../main.rkt"))
 
-(define-syntax-rule (totteoku rest ...) (define rest ...))
+; Meta-utilities
+
+(define ((last-argument-first proc) . args)
+  (apply proc (append (take-right args 1) (drop-right args 1))))
+
+
 
 (define-syntax-rule (kaku-turtle rest ...) (draw-turtle rest ...))
 
@@ -16,8 +22,19 @@
 (define kakanai dont-paint)
 (define kurikaesu repeat)
 
+; General
+
+(define-syntax-rule (totteoku rest ...) (define rest ...))
+(define-syntax-rule (moshi rest ...) (when rest ...))
+
+; Colors
+
+(define iro (make-color-getter colors))
+(define iro-rgb color-rgb)
+
 ; pict
 
+(define kara empty)
 (define en circle)
 (define en-nuri disk)
 (define chouen ellipse)
@@ -26,11 +43,12 @@
 (define (seihoukei-nuri n) (filled-rectangle n n))
 (define chouhoukei rectangle)
 (define chouhoukei-nuri filled-rectangle)
-(define kara empty)
 
+(define yokonarabi hc-append)
 (define yokonarabi-mannaka hc-append)
 (define yokonarabi-ue ht-append)
 (define yokonarabi-shita hb-append)
+(define tatenarabi vc-append)
 (define tatenarabi-mannaka vc-append)
 (define tatenarabi-hidari vl-append)
 (define tatenarabi-migi vr-append)
@@ -45,9 +63,11 @@
 (define kasane-hidarishita lb-superimpose)
 (define kasane-migishita rb-superimpose)
 
-(define (irozuke iro pict) (colorize pict iro))
+(define (irozuke c pict) (colorize pict (iro c)))
 (define (toumeido pc pict) (cellophane pict pc))
 (define (kakudai baisuu pict) (scale pict baisuu))
+(define sen-futosa linewidth)
+(define (kaiten kakudo pict) (rotate pict (degrees->radians (- kakudo))))
+(define sunpou-awase (last-argument-first scale-to-fit))
+(define waku-chousei (last-argument-first inset))
 
-#;(define (iro-hsv)
-  (make-color ))
