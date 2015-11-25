@@ -25,7 +25,11 @@
 ; General
 
 (define-syntax-rule (totteoku rest ...) (define rest ...))
-(define-syntax-rule (moshi rest ...) (when rest ...))
+(define-syntax moshi
+  (λ (stx)
+    (define datum (cdr (syntax->datum stx)))
+    (cond [(= 2 (length datum)) (datum->syntax stx (cons 'when datum))]
+          [(= 3 (length datum)) (datum->syntax stx (cons 'if datum))])))
 
 ; Colors
 
@@ -71,6 +75,7 @@
 (define (kaiten kakudo pict) (rotate pict (degrees->radians (- kakudo))))
 (define sunpou-awase (last-argument-first scale-to-fit))
 (define waku-chousei (last-argument-first inset))
+(define waku-kirinuki clip)
 
 (define (chuushin-chousei-xy x y pict)
   (inset pict
