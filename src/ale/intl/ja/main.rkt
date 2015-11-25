@@ -53,6 +53,7 @@
 (define tatenarabi-hidari vl-append)
 (define tatenarabi-migi vr-append)
 
+(define kasane cc-superimpose)
 (define kasane-mannaka cc-superimpose)
 (define kasane-hidari lc-superimpose)
 (define kasane-migi rc-superimpose)
@@ -64,10 +65,25 @@
 (define kasane-migishita rb-superimpose)
 
 (define (irozuke c pict) (colorize pict (iro c)))
-(define (toumeido pc pict) (cellophane pict pc))
+(define (toumeido n pict) (cellophane pict n))
 (define (kakudai baisuu pict) (scale pict baisuu))
 (define sen-futosa linewidth)
 (define (kaiten kakudo pict) (rotate pict (degrees->radians (- kakudo))))
 (define sunpou-awase (last-argument-first scale-to-fit))
 (define waku-chousei (last-argument-first inset))
+
+(define (chuushin-chousei-xy x y pict)
+  (inset pict
+         (if (< x 0) 0 (* 2 x))       ; left
+         (if (< y 0) 0 (* 2 y))       ; top
+         (if (> x 0) 0 (* 2 (- x)))   ; right
+         (if (> y 0) 0 (* 2 (- y))))) ; bottom
+(define (chuushin-chousei-kakudo angle dist pict)
+  (define off (point-polar dist (degrees->radians (- angle 90))))
+  (chuushin-chousei-xy (point-x off) (point-y off) pict))
+(define (chuushin-chousei-ue n pict) (chuushin-chousei-xy 0 (- n) pict))
+(define (chuushin-chousei-migi n pict) (chuushin-chousei-xy n 0 pict))
+(define (chuushin-chousei-shita n pict) (chuushin-chousei-xy 0 n pict))
+(define (chuushin-chousei-hidari n pict) (chuushin-chousei-xy (- n) 0 pict))
+
 
