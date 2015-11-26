@@ -38,7 +38,7 @@
 
 ; pict
 
-(define kara empty)
+(define kara blank)
 (define en circle)
 (define en-nuri disk)
 (define chouen ellipse)
