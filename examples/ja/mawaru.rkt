@@ -1,5 +1,5 @@
 #lang racket
-(require "../src/ale/intl/ja/main.rkt")
+(require "../../src/ale/intl/ja/main.rkt")
 
 
 (totteoku boku-no-en (en-nuri 40))
