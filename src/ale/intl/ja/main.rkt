@@ -5,12 +5,7 @@
 (provide (all-defined-out)
          (all-from-out "../../main.rkt"))
 
-; Meta-utilities
-
-(define ((last-argument-first proc) . args)
-  (apply proc (append (take-right args 1) (drop-right args 1))))
-
-
+; Turtle
 
 (define-syntax-rule (kaku-turtle rest ...) (draw-turtle rest ...))
 
@@ -43,8 +38,8 @@
 (define en-nuri disk)
 (define chouen ellipse)
 (define chouen-nuri filled-ellipse)
-(define (seihoukei n) (rectangle n n))
-(define (seihoukei-nuri n) (filled-rectangle n n))
+(define seihoukei square)
+(define seihoukei-nuri filled-square)
 (define chouhoukei rectangle)
 (define chouhoukei-nuri filled-rectangle)
 
@@ -68,27 +63,20 @@
 (define kasane-hidarishita lb-superimpose)
 (define kasane-migishita rb-superimpose)
 
-(define (irozuke c pict) (colorize pict (iro c)))
-(define (toumeido n pict) (cellophane pict n))
-(define (kakudai baisuu pict) (scale pict baisuu))
+(define (irozuke c pict) (colorize (iro c) pict))
+(define toumeido transparency)
+(define kakudai scale)
 (define sen-futosa linewidth)
-(define (kaiten kakudo pict) (rotate pict (degrees->radians (- kakudo))))
-(define sunpou-awase (last-argument-first scale-to-fit))
-(define waku-chousei (last-argument-first inset))
+(define kaiten rotate)
+(define sunpou-awase scale-to-fit)
+(define waku-chousei frame-resize)
 (define waku-kirinuki clip)
 
-(define (chuushin-chousei-xy x y pict)
-  (inset pict
-         (if (< x 0) 0 (* 2 x))       ; left
-         (if (< y 0) 0 (* 2 y))       ; top
-         (if (> x 0) 0 (* 2 (- x)))   ; right
-         (if (> y 0) 0 (* 2 (- y))))) ; bottom
-(define (chuushin-chousei-kakudo angle dist pict)
-  (define off (point-polar dist (degrees->radians (- angle 90))))
-  (chuushin-chousei-xy (point-x off) (point-y off) pict))
-(define (chuushin-chousei-ue n pict) (chuushin-chousei-xy 0 (- n) pict))
-(define (chuushin-chousei-migi n pict) (chuushin-chousei-xy n 0 pict))
-(define (chuushin-chousei-shita n pict) (chuushin-chousei-xy 0 n pict))
-(define (chuushin-chousei-hidari n pict) (chuushin-chousei-xy (- n) 0 pict))
+(define chuushin-chousei-xy adjust-center-xy)
+(define chuushin-chousei-kakudo adjust-center-angle)
+(define chuushin-chousei-ue adjust-center-up)
+(define chuushin-chousei-migi adjust-center-right)
+(define chuushin-chousei-shita adjust-center-down)
+(define chuushin-chousei-hidari adjust-center-left)
 
 
