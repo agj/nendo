@@ -1,7 +1,7 @@
 #lang racket
 (require pict)
-(require "graphics/turtle/main.rkt"
-         "graphics/color.rkt")
+(require "draw/turtle/main.rkt"
+         "color.rkt")
 
 (provide (all-defined-out)
          (rename-out [*scale scale]
@@ -9,8 +9,8 @@
                      [*scale-to-fit scale-to-fit]
                      [*rotate rotate]))
 (provide (except-out (all-from-out pict
-                                   "graphics/turtle/main.rkt"
-                                   "graphics/color.rkt")
+                                   "draw/turtle/main.rkt"
+                                   "color.rkt")
                      scale
                      colorize
                      scale-to-fit

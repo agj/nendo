@@ -1,11 +1,11 @@
 #lang racket
 (require pict)
-(require "struct/turtle.rkt"
-         "../../struct/geom.rkt")
+(require "turtle.rkt"
+         "../../geom.rkt")
 
 (provide (all-defined-out)
-         (all-from-out "struct/turtle.rkt"
-                       "../../struct/geom.rkt"))
+         (all-from-out "turtle.rkt"
+                       "../../geom.rkt"))
 
 (define-syntax draw-turtle
   (λ (stx)
