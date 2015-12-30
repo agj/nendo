@@ -1,5 +1,5 @@
 #lang racket
-(require "../src/ale/intl/ja/main.rkt")
+(require "../src/ale/main.rkt")
 
 ;; Contribution by Hiroshi Seo.
 
@@ -29,7 +29,7 @@
       myvar
       (hor-bottom-align -10 (bound (- n 1) myvar)
                         (ver-align myvar
-                                   (kara 1 (* 200 (abs (sin (* n 0.3)))))))))
+                                   (blank 1 (* 200 (abs (sin (* n 0.3)))))))))
 
 
 (hor-bottom-align -30
