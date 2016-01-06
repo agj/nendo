@@ -1,5 +1,5 @@
 #lang racket
-(require "../src/ale/intl/ja/main.rkt")
+(require "../src/ale/main.rkt")
 
 ;; Contribution by Tetsuji Satou.
 
