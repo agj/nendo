@@ -1,6 +1,7 @@
 #lang racket
 (require pict)
 (require "draw/turtle/main.rkt"
+         "draw/function/main.rkt"
          "color.rkt")
 
 (provide (all-defined-out)
@@ -10,6 +11,7 @@
                      [*rotate rotate]))
 (provide (except-out (all-from-out pict
                                    "draw/turtle/main.rkt"
+                                   "draw/function/main.rkt"
                                    "color.rkt")
                      scale
                      colorize
