@@ -11,8 +11,8 @@
 (struct rect (top right bottom left) #:transparent)
 
 (define (rect-size r)
-  (point (- (rect-right r) (rect-left r))
-         (- (rect-bottom r) (rect-top r))))
+  (point (abs (- (rect-right r) (rect-left r)))
+         (abs (- (rect-bottom r) (rect-top r)))))
 
 
 ; Point
