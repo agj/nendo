@@ -1,5 +1,5 @@
 #lang racket
-(require "../src/ale/main.rkt")
+(require "../src/nendo/main.rkt")
 
 
 (define my-circle (filled-circle 40))

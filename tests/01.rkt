@@ -1,5 +1,5 @@
 #lang racket
-(require "../src/ale/main.rkt")
+(require "../src/nendo/main.rkt")
 
 (define (vertical x y) (< (abs x) 10))
 (define (horizontal x y) (< (abs y) 10))
