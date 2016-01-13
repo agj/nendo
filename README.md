@@ -11,14 +11,16 @@ The **first milestone** is to create a language that facilitates static (non-ani
 [racket]: http://racket-lang.org/
 
 
-## The sketches
+## The language sketches
 
 
 ### Sketch 1
 
-Using Lisp syntax and leveraging the entire [Racket][racket] language. Only featured (non-animated) drawing functionality.
+Took aim on non-programmers by way of humanistic design that tried to remove many of the 'computery' parts of programming. Focused only on (non-animated) drawing functionality.
 
-The [**pict**][pict] library and its **functional, value-based** approach to picture drawing was also leveraged, albeit with some modifications. These are mostly renaming some functions, and making sure that they take the picture as the _last_ argument, which allows for clearer, more composable code. Some extra utilities were also included.
+The first observation was that programming in the modern age, artistically-oriented programming included, is in great part much like it has been since the inception of computing, that is, tailoring the practice of programming to the computer more than to the user. The imperative paradigm of programming, that in which we describe step by step what tasks need to be done to accomplish what we want, is the norm. As an alternative stands the declarative paradigm, which introduces the powerful notion that the computer can (and should) figure out by itself the detailed steps to carry out, given something closer to a description of that which needs to be done. This is not a new paradigm, but its adoption is dwarfed by the earlier, more established imperative way of programming. A declarative way of programming needs not be attached to the actual processing of the machine, and can be thus tailored to human needs more freely.
+
+That is why it was deemed appropriate to use a functional language, which is a programming language that uses functions and the exchange of values in order to describe a _system_ (as opposed to a _process_). With it, we could create something closer to the description of a picture, rather than a process to create one. So the [Racket][racket] language (of the Lisp family of languages) was chosen, for deeming it powerful for the construction of _domain-specific languages_ (essentially sub-languages). Its included [**pict**][pict] library and its **functional, value-based** approach to picture drawing was leveraged, albeit with slight modifications. In general, what the pict library allows for is to upgrade a picture from just a _result_ to a _value,_ which can be combined in different fashions with other such picture values (**composability,**) can be transformed, etc.
 
 The concept of **draw modes** was introduced. They are a way to offer different approaches to the idea of drawing a picture, while maintaining composability among their results.
 
