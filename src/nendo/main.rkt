@@ -1,8 +1,10 @@
 #lang racket
-(require pict)
+(require pict
+         racket/draw)
 (require "draw/turtle/main.rkt"
          "draw/function/main.rkt"
-         "color.rkt")
+         "color.rkt"
+         "function.rkt")
 
 (provide (all-defined-out)
          (rename-out [*scale scale]
@@ -25,25 +27,11 @@
   (apply proc (append (take-right args 1) (drop-right args 1))))
 
 
-; General
-
-(define-syntax *if
-  (λ (stx)
-    (define datum (cdr (syntax->datum stx)))
-    (cond [(= 2 (length datum)) (datum->syntax stx (cons 'when datum))]
-          [(= 3 (length datum)) (datum->syntax stx (cons 'if datum))])))
-
-
-; Colors
-
-(define color (make-color-getter #hash()))
-
-
 ; pict
 
-(define filled-circle disk)
-(define (square n) (rectangle n n))
-(define (filled-square n) (filled-rectangle n n))
+(define filled-circle (curry disk))
+(define/curry (square n) (rectangle n n))
+(define/curry (filled-square n) (filled-rectangle n n))
 
 (define hor-align hc-append)
 (define hor-center-align hc-append)
@@ -65,13 +53,19 @@
 (define bottom-left-superimpose lb-superimpose)
 (define bottom-right-superimpose rb-superimpose)
 
-(define (*colorize c pict) (colorize pict (color c)))
-(define (transparency n pict) (cellophane pict n))
-(define (*scale baisuu pict) (scale pict baisuu))
-(define line-width linewidth)
-(define (*rotate angle pict) (rotate pict (degrees->radians (- angle))))
+(define/curry (*colorize c pict) (colorize pict c))
+(define/curry (transparency n pict) (cellophane pict n))
+(define/curry (*scale baisuu pict) (scale pict baisuu))
+(define line-width (curry linewidth))
+(define/curry (*rotate angle pict) (rotate pict (degrees->radians (- angle))))
 (define *scale-to-fit (last-argument-first scale-to-fit))
-(define frame-resize (last-argument-first inset))
+(define frame-resize (λ args
+  (define (*inset pict vals) (match vals [(list t r b l) (inset pict l t r b)]
+                                         [_ (apply inset (cons pict vals))]))
+  (if (pict? (last args))
+      (*inset (last args) (drop-right args 1))
+      (λ (pict) (*inset pict args)))))
+#;(define frame-resize (last-argument-first inset))
 
 (define (adjust-center-xy x y pict)
   (inset pict
