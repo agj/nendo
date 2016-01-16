@@ -58,7 +58,10 @@
 (define/curry (*scale baisuu pict) (scale pict baisuu))
 (define line-width (curry linewidth))
 (define/curry (*rotate angle pict) (rotate pict (degrees->radians (- angle))))
-(define *scale-to-fit (last-argument-first scale-to-fit))
+(define/curry (*scale-to-fit comp pict)
+  (cond [(rect? comp) (scale-to-fit pict (point-x comp) (point-y comp))]
+        [(pict? comp) (scale-to-fit pict comp)]))
+#;(define *scale-to-fit (last-argument-first scale-to-fit))
 (define frame-resize (λ args
   (define (*inset pict vals) (match vals [(list t r b l) (inset pict l t r b)]
                                          [_ (apply inset (cons pict vals))]))
