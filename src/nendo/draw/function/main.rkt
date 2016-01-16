@@ -6,7 +6,7 @@
 (provide (all-defined-out))
 
 
-(define (draw-function f area)
+(define (draw-function area f)
   (define area-size (rect-size area))
   (define area-width (point-x area-size))
   (define area-height (point-y area-size))
@@ -19,7 +19,7 @@
               (send bm-dc set-pixel
                     (- x (rect-left area))
                     (- y (rect-bottom area))
-                    (to-color (f x y) color)))
+                    (to-color (f (point x y)) color)))
         (send dc draw-bitmap bm dx dy))
       area-width area-height))
 
@@ -27,4 +27,10 @@
   (cond [(is-a? value color%)
          value]
         [(boolean? value)
-         (if value color (make-color 0 0 0 0))]))
+         (if value color (make-color 0 0 0 0))]
+        [(number? value)
+         (make-color
+          (send color red)
+          (send color green)
+          (send color blue)
+          (* value (send color alpha)))]))
