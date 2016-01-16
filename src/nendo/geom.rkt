@@ -34,3 +34,7 @@
 (define (point-eq? a b)
   (and (= (point-x a) (point-x b))
        (= (point-y a) (point-y b))))
+
+(define (point-distance pt)
+  (sqrt (+ (expt (point-x pt) 2)
+           (expt (point-y pt) 2))))

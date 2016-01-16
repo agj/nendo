@@ -1,9 +1,11 @@
 #lang racket
 (require racket/draw
          pict
-         "../../geom.rkt")
+         "../../geom.rkt"
+         "transform.rkt")
 
-(provide (all-defined-out))
+(provide draw-function
+         (all-from-out "transform.rkt"))
 
 
 (define (draw-function area f)
