@@ -7,10 +7,13 @@
 (define (rings pt) (even? (floor (point-distance pt))))
 (define (waves pt) (/ (+ 1 (cos (* tau (point-distance pt)))) 2))
 
-(define rect200 (rect 100 100 -100 -100))
+(define draw200 (draw-function (rect 100 100 -100 -100)))
 
-(draw-function rect200 (translate/function (point 25 25) (uscale/function 50 checker)))
-(colorize "red" (draw-function rect200 (uscale/function 30 waves)))
-(scale 3 (draw-function rect200 (uscale/function 10 rings)))
+(draw200 (rotate/function (* 1/8 tau)
+           (uscale/function 50
+             (translate/function (point 0.5 0.5)
+               checker))))
+(colorize "red" (draw200 (uscale/function 30 waves)))
+(scale 3 (draw200 (uscale/function 10 rings)))
 
 

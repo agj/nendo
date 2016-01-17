@@ -2,13 +2,14 @@
 (require racket/draw
          pict
          "../../geom.rkt"
+         "../../function.rkt"
          "transform.rkt")
 
 (provide draw-function
          (all-from-out "transform.rkt"))
 
 
-(define (draw-function area f)
+(define/curry (draw-function area f)
   (define area-size (rect-size area))
   (define area-width (point-x area-size))
   (define area-height (point-y area-size))
