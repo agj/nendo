@@ -3,8 +3,8 @@
 
 
 (define (regular-polygon n size)
-  (define angle (- 180 (/ 360 n)))
-  (define side (* 2 size (sin (degrees->radians (/ 360 n 2)))))
+  (define angle (- (/ tau 2) (/ tau n)))
+  (define side (* 2 size (sin (/ tau n 2))))
   (draw-turtle
    (repeat n
               (dont-paint)
@@ -15,7 +15,7 @@
               (left (/ angle 2))
               (dont-paint)
               (forward size)
-              (right 180))))
+              (right (* tau 0.5)))))
 
 (define (many-regular-polygons n)
   (define this-polygon (regular-polygon n (* n 10)))

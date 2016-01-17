@@ -7,7 +7,7 @@
     (transparency 0.5
       (colorize "pink"
         (line-width 10
-          (rotate (* n 10)
+          (rotate (degrees->radians (* n 10))
             (scale 2 thing)))))))
 
 (define boring-square (square 40))

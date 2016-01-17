@@ -12,7 +12,7 @@
 
 (define (my-circle2 angle)
   (define this-circle
-    (adjust-center-angle angle 100
+    (adjust-center-angle (degrees->radians angle) 100
                          (colorize (color-rgb (/ angle 360) 0 1)
                                   my-circle)))
   (if (> angle 0)

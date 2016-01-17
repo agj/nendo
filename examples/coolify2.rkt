@@ -11,7 +11,7 @@
     (transparency 0.5
       (colorize "purple"
         (line-width 3
-          (rotate (* n 10)
+          (rotate (degrees->radians (* n 10))
             (scale 2 thing)))))))
 
 (define falling-thing

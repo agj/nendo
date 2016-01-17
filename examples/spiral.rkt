@@ -6,7 +6,7 @@
   (when (> length 0)
     (draw-turtle
      (forward 10)
-     (right (* 0.5 length))
+     (right (* length (degrees->radians 0.5)))
      (spiral (- length 1)))))
 
 (spiral 1000)

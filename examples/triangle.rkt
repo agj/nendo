@@ -5,10 +5,10 @@
 (define triangle
   (draw-turtle
    (repeat 3
-           (right (* 360 1/3))
+           (right (* tau 1/3))
            (forward 80))))
 
 (draw-turtle
  (repeat 10
-         (right (* 360 1/10))
+         (right (* tau 1/10))
          triangle))

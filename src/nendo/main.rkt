@@ -57,7 +57,7 @@
 (define/curry (transparency n pict) (cellophane pict n))
 (define/curry (*scale baisuu pict) (scale pict baisuu))
 (define line-width (curry linewidth))
-(define/curry (*rotate angle pict) (rotate pict (degrees->radians (- angle))))
+(define/curry (*rotate angle pict) (rotate pict (- angle)))
 (define/curry (*scale-to-fit comp pict)
   (cond [(rect? comp) (scale-to-fit pict (point-x comp) (point-y comp))]
         [(pict? comp) (scale-to-fit pict comp)]))
@@ -77,7 +77,7 @@
          (if (> x 0) 0 (* 2 (- x)))   ; right
          (if (> y 0) 0 (* 2 (- y))))) ; bottom
 (define (adjust-center-angle angle dist pict)
-  (define off (point-polar dist (degrees->radians (- angle 90))))
+  (define off (point-polar dist (- angle (* tau 0.25))))
   (adjust-center-xy (point-x off) (point-y off) pict))
 (define (adjust-center-up n pict) (adjust-center-xy 0 (- n) pict))
 (define (adjust-center-right n pict) (adjust-center-xy n 0 pict))

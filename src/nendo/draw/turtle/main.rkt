@@ -9,8 +9,7 @@
 
 (define-syntax draw-turtle
   (λ (stx)
-    (datum->syntax stx `(let* (;[forward turtle:forward] [backward turtle:backward] [right turtle:right] [left turtle:left] [repeat turtle:repeat]
-                               [steps (expand-turtle-sub-steps ,(cons 'list (cdr (syntax->datum stx))))]
+    (datum->syntax stx `(let* ([steps (expand-turtle-sub-steps ,(cons 'list (cdr (syntax->datum stx))))]
                                [states (turtle-steps->states steps)]
                                [bounds (turtle-state-bounds (last states))]
                                [size (rect-size bounds)])
@@ -24,8 +23,8 @@
 
 (define (forward amount) (turtle-step 'forward (list amount)))
 (define (backward amount) (turtle-step 'backward (list amount)))
-(define (right amount) (turtle-step 'right (list (degrees->radians amount))))
-(define (left amount) (turtle-step 'left (list (degrees->radians amount))))
+(define (right amount) (turtle-step 'right (list amount)))
+(define (left amount) (turtle-step 'left (list amount)))
 (define (paint) (turtle-step 'paint '()))
 (define (dont-paint) (turtle-step 'dont-paint '()))
 (define (repeat . args) (turtle-step 'repeat args))

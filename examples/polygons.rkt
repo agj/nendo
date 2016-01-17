@@ -5,7 +5,7 @@
 (define (polygon n size)
   (draw-turtle
    (repeat n
-           (right (/ 360 n))
+           (right (/ tau n))
            (forward size))))
 
 (superimpose (polygon 3 80)
