@@ -5,11 +5,11 @@
          "../../function.rkt"
          "transform.rkt")
 
-(provide draw-function
+(provide draw-fi
          (all-from-out "transform.rkt"))
 
 
-(define/curry (draw-function area f)
+(define/curry (draw-fi area f)
   (define area-size (rect-size area))
   (define area-width (point-x area-size))
   (define area-height (point-y area-size))

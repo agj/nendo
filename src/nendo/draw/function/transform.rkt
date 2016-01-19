@@ -33,14 +33,14 @@
 (define intersection/region and/region)
 (define inverse/region not/region)
 
-;; Function
+;; Function image
 
-(define/curry (scale/function spt f) (compose f (scale/point (point (/ 1 (point-x spt))
+(define/curry (scale/fi spt f) (compose f (scale/point (point (/ 1 (point-x spt))
                                                                     (/ 1 (point-y spt))))))
-(define/curry (uscale/function n f) (compose f (uscale/point (/ 1 n))))
-(define/curry (translate/function dest f)
+(define/curry (uscale/fi n f) (compose f (uscale/point (/ 1 n))))
+(define/curry (translate/fi dest f)
   (compose f (translate/point (point (- (point-x dest))
                                      (- (point-y dest))))))
-(define/curry (rotate/function angle f) (compose f (rotate/point (- angle))))
+(define/curry (rotate/fi angle f) (compose f (rotate/point (- angle))))
 
 
