@@ -11,7 +11,7 @@
 (struct rect (top right bottom left) #:transparent)
 
 (define make-rect (case-lambda [(w h) (rect h w 0 0)]
-                               [(x y w h) (rect h w y x)]))
+                               [(x y w h) (rect (+ y h) (+ x w) y x)]))
 
 (define (rect-width r) (abs (- (rect-right r) (rect-left r))))
 
