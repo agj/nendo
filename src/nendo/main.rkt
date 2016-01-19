@@ -14,7 +14,8 @@
 (provide (except-out (all-from-out pict
                                    "draw/turtle/main.rkt"
                                    "draw/function/main.rkt"
-                                   "color.rkt")
+                                   "color.rkt"
+                                   "function.rkt")
                      scale
                      colorize
                      scale-to-fit
