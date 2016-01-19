@@ -5,20 +5,9 @@
 (provide (all-defined-out))
 
 
-(struct point/polar (distance angle) #:transparent)
-
-(define (cartesian->polar pt) (point/polar (point-distance pt)
-                                           (if (and (= 0 (point-x pt)) (= 0 (point-y pt)))
-                                               0
-                                               (atan (point-y pt) (point-x pt)))))
-(define (polar->cartesian ptp)
-  (define distance (point/polar-distance ptp))
-  (define angle (point/polar-angle ptp))
-  (point (* distance (cos angle))
-         (* distance (sin angle))))
-(define/curry (polar-transform xf pt) ((compose polar->cartesian xf cartesian->polar) pt))
-
 ;; Point
+
+(define/curry (polar-transform xf pt) ((compose polar->cartesian xf cartesian->polar) pt))
 
 (define/curry (scale/point spt pt) (point (* (point-x spt) (point-x pt))
                                           (* (point-y spt) (point-y pt))))
@@ -30,6 +19,20 @@
                                          (+ angle (point/polar-angle ptp)))))
    pt))
 
+;; Region
+
+(define (&& a b) (and a b))
+(define (|| a b) (or a b))
+
+(define/curry (or/region f g) (lift || f g))
+(define/curry (and/region f g) (lift && f g))
+(define/curry (xor/region f g) (lift xor f g))
+(define/curry (not/region f) (lift not f))
+
+(define union/region or/region)
+(define intersection/region and/region)
+(define inverse/region not/region)
+
 ;; Function
 
 (define/curry (scale/function spt f) (compose f (scale/point (point (/ 1 (point-x spt))
@@ -39,3 +42,5 @@
   (compose f (translate/point (point (- (point-x dest))
                                      (- (point-y dest))))))
 (define/curry (rotate/function angle f) (compose f (rotate/point (- angle))))
+
+

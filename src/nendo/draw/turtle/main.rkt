@@ -96,7 +96,7 @@
   (define prev-pos (turtle-state-pos state))
   (define prev-bounds (turtle-state-bounds state))
   (define pos (point-sum prev-pos
-                         (point-polar amount (- angle (* tau 0.25)))))
+                         (point-from-polar amount (- angle (* tau 0.25)))))
   (define bounds (rect (min (point-y pos) (rect-top prev-bounds))
                            (max (point-x pos) (rect-right prev-bounds))
                            (max (point-y pos) (rect-bottom prev-bounds))

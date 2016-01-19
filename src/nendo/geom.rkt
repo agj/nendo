@@ -25,8 +25,10 @@
 ; Point
 
 (struct point (x y) #:transparent)
+(define point/cartesian point)
+(define point/c point)
 
-(define (point-polar distance angle)
+(define (point-from-polar distance angle)
   (point (* distance (cos angle))
          (* distance (sin angle))))
 
@@ -45,3 +47,23 @@
 (define (point-distance pt)
   (sqrt (+ (expt (point-x pt) 2)
            (expt (point-y pt) 2))))
+
+(define (point-angle pt)
+  (if (and (= 0 (point-x pt)) (= 0 (point-y pt)))
+      0
+      (atan (point-y pt) (point-x pt))))
+
+
+; Point polar
+
+(struct point/polar (distance angle) #:transparent)
+(define point/p point/polar)
+
+(define (cartesian->polar pt) (point/polar (point-distance pt)
+                                           (point-angle pt)))
+(define (polar->cartesian ptp)
+  (define distance (point/polar-distance ptp))
+  (define angle (point/polar-angle ptp))
+  (point (* distance (cos angle))
+         (* distance (sin angle))))
+

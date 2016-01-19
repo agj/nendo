@@ -9,11 +9,14 @@
 
 (define draw200 (draw-function (rect 100 100 -100 -100)))
 
-(draw200 (rotate/function (* 1/8 tau)
-           (uscale/function 50
-             (translate/function (point 0.5 0.5)
-               checker))))
-(colorize "red" (draw200 (uscale/function 30 waves)))
-(scale 3 (draw200 (uscale/function 10 rings)))
+#;(colorize "red" (draw200 (uscale/function 30 waves)))
+#;(scale 3 (draw200 (uscale/function 10 rings)))
+
+(define my-checker (uscale/function 10 (translate/function (point 0.5 0.5) checker)))
+
+(draw200 (rotate/function (* 1/8 tau) my-checker))
+(draw200 my-checker)
+(draw200 (xor/region (rotate/function (* 1/8 tau) my-checker)
+                     my-checker))
 
 

@@ -77,7 +77,7 @@
          (if (> x 0) 0 (* 2 (- x)))   ; right
          (if (> y 0) 0 (* 2 (- y))))) ; bottom
 (define (adjust-center-angle angle dist pict)
-  (define off (point-polar dist (- angle (* tau 0.25))))
+  (define off (point-from-polar dist (- angle (* tau 0.25))))
   (adjust-center-xy (point-x off) (point-y off) pict))
 (define (adjust-center-up n pict) (adjust-center-xy 0 (- n) pict))
 (define (adjust-center-right n pict) (adjust-center-xy n 0 pict))
